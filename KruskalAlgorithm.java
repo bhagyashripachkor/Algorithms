@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
+
+
 public class KruskalAlgorithm {
     private static Map<Character, Character> PARENT;
     private static Map<Character, Integer> rank;
@@ -23,14 +25,28 @@ public class KruskalAlgorithm {
 
         @Override
         public int compareTo(Edge e) {
-            return weight<e.weight?-1:(weight>e.weight?1:0);
+
+        	if(weight != e.weight)
+        		return this.weight- e.weight;
+        	else if(source != e.source)
+        		if(e.source < source) {
+        			return -1;
+        		}else
+        			return 1;
+
+        	else if(e.destination < destination) {
+        			return -1;
+        		}else if(e.destination > destination)
+        			return 1;
+        		else return 0;
+        	
         } 
-        
         @Override
         public String toString(){
         	
             return "("+source+","+destination+")";
         }
+
     }
     
 
@@ -123,7 +139,7 @@ public class KruskalAlgorithm {
 		
 		int countOfEdges = 0;
 		for(int i = 0; i < noOfVertices; i++){
-			for(int j = 0; j< noOfVertices; j++){
+			for(int j = i; j< noOfVertices; j++){
 				if(matrix[i][j] != 0){
 					countOfEdges++;
 				}
@@ -133,7 +149,7 @@ public class KruskalAlgorithm {
 		int index2 = 0; 
 		Edge[] edges = new Edge[countOfEdges];        
 		for(int i = 0; i < noOfVertices; i++){
-			for(int j = 0; j< noOfVertices; j++){
+			for(int j = i; j< noOfVertices; j++){
 				if(matrix[i][j] != 0){
 					edges[index2] = new Edge(listOfVertex[i],listOfVertex[j],matrix[i][j]);
 					index2++;
@@ -170,8 +186,34 @@ public class KruskalAlgorithm {
                 }
             }             
            
-       
+            ArrayList<Edge> treenew = new ArrayList<>();
+          
+            ArrayList<Character> src = new ArrayList<Character>();
+            ArrayList<Character> dest = new ArrayList<Character>();
             ListIterator<Edge> pathItr = tree.listIterator();
+    		while(pathItr.hasNext()){
+ 
+    			char a = pathItr.next().source;
+    			dest.add(a);
+    
+    			
+    		}
+    		ListIterator<Edge> pathItr2 = tree.listIterator();
+    		while(pathItr2.hasNext()){
+
+    			char b = pathItr2.next().destination;
+    			src.add(b);
+    	
+    			
+    		}
+  
+   		
+    		for(int i = 0,j=0; i < src.size() && j< dest.size(); i++,j++){
+    			char s = src.get(i);
+    			char d = dest.get(j);
+//    			System.out.println("("+s+","+d+")");
+    		}
+            //ListIterator<Edge> pathItr = tree.listIterator();
     		while(pathItr.hasNext()){
     			System.out.println(pathItr.next());
     		}
